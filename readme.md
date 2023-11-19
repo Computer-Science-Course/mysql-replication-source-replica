@@ -1,5 +1,5 @@
 
-# Replicação MySQL ~~master-slave~~ source-replica (Ubuntu Desktop 20.04 LTS)
+# Replicação MySQL ~~master-slave~~ source-replica (Ubuntu Desktop 22.04 LTS)
 
 Esse tutorial tem como referência o tutorial da [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-source-replica-replication-in-mysql).
 
@@ -8,10 +8,10 @@ Utilizaremos prefixos de usuários para identificar em qual máquina estamos tra
 ## Caso precise recomeçar
 Caso você tenha se perdido no processo, ou queira recomeçar, você pode deletar tudo e começar do zero. Para isso, basta desistalar o mysql e deletar os arquivos de configuração.
 ```bash
-replica:~$ sudo apt-get remove --purge mysql-server -y
+replica:~$ sudo apt remove --purge mysql-server -y
 ```
 ```bash
-source:~$ sudo apt-get remove --purge mysql-server -y
+source:~$ sudo apt remove --purge mysql-server -y
 ```
 Quando eu reinstalei o mysql, ele ainda pareceu utilizar as configurações antigas, então eu tive que fazer uma limpeza completa deletar alguns arquivos que restaram utilizando:
 ```bash
@@ -21,27 +21,27 @@ replica:~$ sudo find / -type d -name "*mysql*" -exec rm -r {} +
 source:~$ sudo find / -type d -name "*mysql*" -exec rm -r {} +
 ```
 ---
-Esse tutorial foi feito utilizando o Ubuntu 20.04.3 LTS versão **Desktop** em [VirtualBox](https://www.virtualbox.org/).
+Esse tutorial foi feito utilizando o Ubuntu 22.04.3 LTS versão **Desktop** em [VirtualBox](https://www.virtualbox.org/).
 ## Preparativos nas duas máquinas
 Como utilizaremos duas máquinas virtuais, para facilitar a transição entre uma máquina e outra, vamos utilizar o ssh para trabalhar apenas em uma máquina por vez. Para isso, vamos instalar o ssh nas duas máquinas.
 ```bash
- sudo apt-get install openssh-server -y
+ sudo apt install openssh-server -y
 ```
 
 ## Instalação
 ### Instalando o MySQL (replica)
 ```bash
-replica:~$ sudo apt-get update
+replica:~$ sudo apt update
 ```
 ```bash
-replica:~$ sudo apt-get install mysql-server -y
+replica:~$ sudo apt install mysql-server -y
 ```
 ### Instalando o MySQL (source)
 ```bash
-source:~$ sudo apt-get update
+source:~$ sudo apt update
 ```
 ```bash
-source:~$ sudo apt-get install mysql-server -y
+source:~$ sudo apt install mysql-server -y
 ```
 
 ## Configurando o banco de dados (source)
