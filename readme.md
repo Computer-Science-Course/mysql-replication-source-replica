@@ -114,6 +114,11 @@ log_bin                 = /var/log/mysql/mysql-bin.log
 ```
 Salve o arquivo e feche-o, pra isso, utilize o atalho `ctrl` + `x`, em seguida digite `y` e pressione `enter`.
 
+Restarte o MySQL.
+```bash
+source:~$ sudo systemctl restart mysql
+```
+
 Criando o usuário que será utilizado para a replicação.
 ```bash
 source:~$ sudo mysql
@@ -125,7 +130,7 @@ msql> CREATE USER 'replica_user'@'replica_ip' IDENTIFIED WITH mysql_native_passw
 > **Atenção:** Não esqueça de substituir `replica_ip` pelo endereço IP da máquina replica.<br>
 
 ```sql
-msql> GRANT REPLICATION replica ON *.* TO 'replica_user'@'replica_ip';
+msql> GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'replica_ip';
 ```
 > **Atenção:** Não esqueça de substituir `replica_ip` pelo endereço IP da máquina replica.<br>
 ```sql	
@@ -134,7 +139,7 @@ msql> FLUSH PRIVILEGES;
 
 ### Recuperando o binlog do source
 ```sql
-msql> SHOW source STATUS;
+msql> SHOW MASTER STATUS;
 ```
 Output:
 ```txt
@@ -201,7 +206,7 @@ replica:~$ sudo systemctl restart mysql
 replica:~$ sudo mysql
 ```
 ```sql
-msql> STOP replica;
+msql> STOP REPLICA;
 ```
 ```sql
 mysql> CHANGE REPLICATION SOURCE TO
@@ -317,7 +322,7 @@ O arquivo de log irá mudar, então precisamos capturar novamente essa informaç
 source:~$ sudo mysql
 ```
 ```sql
-msql> SHOW source STATUS;
+msql> SHOW MASTER STATUS;
 ```
 Output:
 ```txt
@@ -338,7 +343,7 @@ msql> CREATE USER 'replica_user'@'novo_replica_ip' IDENTIFIED WITH mysql_native_
 > **Atenção:** Não esqueça de substituir `novo_replica_ip` pelo novo endereço IP da máquina replica.
 
 ```sql
-msql> GRANT REPLICATION replica ON *.* TO 'replica_user'@'novo_replica_ip';
+msql> GRANT REPLICATION SLAVE ON *.* TO 'replica_user'@'novo_replica_ip';
 ```
 ```sql
 msql> FLUSH PRIVILEGES;
