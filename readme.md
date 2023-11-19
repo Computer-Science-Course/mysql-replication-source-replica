@@ -1,7 +1,7 @@
 
 # Replicação MySQL ~~master-slave~~ source-replica (Ubuntu Desktop 22.04 LTS)
 
-Esse tutorial tem como referência o tutorial da [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-source-replica-replication-in-mysql).
+Esse tutorial tem como referência o tutorial da [Digital Ocean](https://www.digitalocean.com/community/tutorials/how-to-set-up-replication-in-mysql).
 
 Utilizaremos prefixos de usuários para identificar em qual máquina estamos trabalhando. O prefixo **source** será utilizado para a máquina que será o servidor principal, e o prefixo **replica** será utilizado para a máquina que será o servidor secundário. Lembre de removê-los quando for utilizar os comandos.
 
@@ -184,6 +184,12 @@ Para:
 log_bin                 = /var/log/mysql/mysql-bin.log  
 ...
 ```
+Adicione o `relay_log` no final do arquivo.
+```txt
+...
+relay_log               = /var/log/mysql/replica-relay-bin.log
+```
+
 Salve o arquivo e feche-o, pra isso, utilize o atalho `ctrl` + `x`, em seguida digite `y` e pressione `enter`.
 Restarte o MySQL.
 ```bash
